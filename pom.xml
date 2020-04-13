@@ -19,8 +19,13 @@
                 </configuration>
             </plugin>
         </plugins>
-
     </build>
+
+    <scm>
+        <connection>scm:git:git@github.com:i386/squarespace-java-api.git</connection>
+        <developerConnection>scm:git:git@github.com:i386/squarespace-java-api.git</developerConnection>
+        <tag>master</tag>
+    </scm>
 
     <dependencies>
         <dependency>
