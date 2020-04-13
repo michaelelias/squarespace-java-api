@@ -1,6 +1,6 @@
 # Squarespace Java API
 
-A java client for the Squarespace REST API
+A java client for the Squarespace Commerce API
 
 [ ![Download](https://api.bintray.com/packages/i386/maven/squarespace-java-api/images/download.svg) ](https://bintray.com/i386/maven/squarespace-java-api/_latestVersion)
 

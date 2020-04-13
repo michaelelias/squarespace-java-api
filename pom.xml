@@ -5,6 +5,7 @@
     <groupId>com.wildspirit.squarespace</groupId>
     <artifactId>squarespace-java-api</artifactId>
     <version>0.2-SNAPSHOT</version>
+    <description>A java client for the Squarespace Commerce API</description>
     <packaging>jar</packaging>
     <build>
         <plugins>
