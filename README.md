@@ -2,6 +2,8 @@
 
 A java client for the Squarespace REST API
 
+[ ![Download](https://api.bintray.com/packages/i386/maven/squarespace-java-api/images/download.svg) ](https://bintray.com/i386/maven/squarespace-java-api/_latestVersion)
+
 # Usage
 
 ## Construct the client
