@@ -124,7 +124,7 @@ public final class Squarespace {
         try (Response response = client.newCall(request).execute()) {
             return mapper.readValue(response.body().bytes(), responseClazz);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SquarespaceException("Could not map " + responseClazz.getName(), e);
         }
     }
 
@@ -145,7 +145,7 @@ public final class Squarespace {
         try (Response response = client.newCall(request).execute()) {
             return mapper.readValue(response.body().bytes(), responseClazz);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SquarespaceException("Could not map " + responseClazz.getName(), e);
         }
     }
 
