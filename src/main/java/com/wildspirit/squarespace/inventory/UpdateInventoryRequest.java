@@ -48,7 +48,7 @@ public final class UpdateInventoryRequest {
             return this;
         }
 
-        UpdateInventoryRequest build() {
+        public UpdateInventoryRequest build() {
             return new UpdateInventoryRequest(incrementOperations, decrementOperations, setFiniteOperations, setUnlimitedOperations);
         }
     }
