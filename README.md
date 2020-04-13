@@ -11,7 +11,7 @@ Squarespace squarespace = new Squarespace(/** your key */);
 squarespace.orders();
 
 // Get inventory
-squarespace.inventory()
+squarespace.inventory();
 ```
 
 # License
