@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wildspirit.squarespace.inventory.GetInventoryResponse;
 import com.wildspirit.squarespace.inventory.InventoryItem;
 import com.wildspirit.squarespace.inventory.UpdateInventoryRequest;
+import com.wildspirit.squarespace.orders.FulfillOrderRequest;
 import com.wildspirit.squarespace.orders.GetOrdersRequest;
 import com.wildspirit.squarespace.orders.GetOrdersResponse;
 import com.wildspirit.squarespace.orders.Order;
@@ -63,6 +64,10 @@ public final class Squarespace {
         Map<String, String> params = new HashMap<>();
         params.put("Idempotency-Key", newIdempotencyKey());
         httpPost("https://api.squarespace.com/1.0/commerce/inventory/adjustments", req, params, Void.class);
+    }
+
+    public void fulfillOrder(FulfillOrderRequest req) {
+        httpPost(String.format("https://api.squarespace.com/1.0/commerce/orders/%s/fulfillments", req.orderId), req, new HashMap<>(), Void.class);
     }
 
     public Iterable<Order> orders(GetOrdersRequest req) {

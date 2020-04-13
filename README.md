@@ -13,6 +13,12 @@ GetOrdersRequest request = new GetOrdersRequest.Builder()
     .build();
 squarespace.orders(request);
 
+// Fulfill order
+FulfillOrderRequest request = new FulfillOrderRequest.Builder()
+    .withOrderId("123")
+    .build();
+squarespace.fulfillOrder(request);
+
 // Get inventory
 squarespace.inventory();
 ```
