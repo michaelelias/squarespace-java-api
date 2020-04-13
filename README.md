@@ -59,6 +59,31 @@ GetTransactionsRequest req = new GetTransactionsRequest.Builder()
 squarespace.transactions(req);
 ```
 
+# Maven
+Use maven – one of life's necessary evils – to fetch the latest version of this library.
+
+## Add repository
+```
+<repository>
+    <id>bintray-i386-maven</id>
+    <name>bintray</name>
+    <url>https://dl.bintray.com/i386/maven</url>
+    <snapshots>
+        <enabled>false</enabled>
+    </snapshots>
+</repository>
+```
+
+## Add dependency
+```
+<dependency>
+    <groupId>com.wildspirit.squarespace</groupId>
+    <artifactId>squarespace-java-api</artifactId>
+    <version>0.1</version>
+</dependency>
+```
+
+
 # License
 
 MIT License
