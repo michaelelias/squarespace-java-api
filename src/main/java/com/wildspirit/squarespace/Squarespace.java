@@ -1,17 +1,20 @@
 package com.wildspirit.squarespace;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wildspirit.squarespace.inventory.GetInventoryResponse;
 import com.wildspirit.squarespace.inventory.InventoryItem;
+import com.wildspirit.squarespace.inventory.UpdateInventoryRequest;
 import com.wildspirit.squarespace.orders.GetOrdersResponse;
 import com.wildspirit.squarespace.orders.Order;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.*;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public final class Squarespace {
     private final OkHttpClient client = new OkHttpClient();
@@ -49,6 +52,12 @@ public final class Squarespace {
                return inventory.next();
            }
        };
+    }
+
+    public void updateInventory(UpdateInventoryRequest req) {
+        Map<String, String> params = new HashMap<>();
+        params.put("Idempotency-Key", newIdempotencyKey());
+        httpPost("https://api.squarespace.com/1.0/commerce/inventory/adjustments", req, params, Void.class);
     }
 
     public Iterable<Order> orders() {
@@ -91,5 +100,30 @@ public final class Squarespace {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private <T> T httpPost(String url, Object object, Map<String, String> params, Class<T> responseClazz) {
+        byte[] bytes;
+        try {
+            bytes = mapper.writeValueAsBytes(object);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        RequestBody requestBody = RequestBody.create(bytes, MediaType.get("application/json"));
+        Request.Builder builder = new Request.Builder()
+                .url(url)
+                .addHeader("Authorization", "Bearer " + apiKey)
+                .post(requestBody);
+        params.forEach(builder::addHeader);
+        Request request = builder.build();
+        try (Response response = client.newCall(request).execute()) {
+            return mapper.readValue(response.body().bytes(), responseClazz);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static String newIdempotencyKey() {
+        return RandomStringUtils.random(64, true, true);
     }
 }
