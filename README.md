@@ -48,6 +48,17 @@ UpdateInventoryRequest req = new UpdateInventoryRequest.Builder()
 squarespace.updateInventory(req);
 ```
 
+## Transactions
+
+### Get transaction documents
+```
+GetTransactionsRequest req = new GetTransactionsRequest.Builder()
+    .before(earlierDate)
+    .after(laterDate)
+    .build();
+squarespace.transactions(req);
+```
+
 # License
 
 MIT License

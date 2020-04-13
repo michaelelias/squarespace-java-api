@@ -10,6 +10,9 @@ import com.wildspirit.squarespace.orders.FulfillOrderRequest;
 import com.wildspirit.squarespace.orders.GetOrdersRequest;
 import com.wildspirit.squarespace.orders.GetOrdersResponse;
 import com.wildspirit.squarespace.orders.Order;
+import com.wildspirit.squarespace.transactions.GetTransactionsRequest;
+import com.wildspirit.squarespace.transactions.GetTransactionsResponse;
+import com.wildspirit.squarespace.transactions.Document;
 import io.mikael.urlbuilder.UrlBuilder;
 import okhttp3.*;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -111,6 +114,42 @@ public final class Squarespace {
             @Override
             public Order next() {
                 return orders.next();
+            }
+        };
+    }
+
+    public Iterable<Document> transactions(GetTransactionsRequest req) {
+        UrlBuilder builder = UrlBuilder.fromString("https://api.squarespace.com/1.0/commerce/transactions");
+        if (req.modifiedAfter != null) {
+            builder.addParameter("modifiedAfter", ISO8601.format(req.modifiedAfter));
+        }
+        if (req.modifiedBefore != null) {
+            builder.addParameter("modifiedBefore", ISO8601.format(req.modifiedBefore));
+        }
+        return () -> new Iterator<>() {
+            GetTransactionsResponse resp = httpGet(builder.toString(), GetTransactionsResponse.class);
+            Iterator<Document> transactions = resp.documents.iterator();
+
+            @Override
+            public boolean hasNext() {
+                if (transactions.hasNext()) {
+                    return true;
+                } else {
+                    if (resp.pagination.hasNextPage) {
+                        // Fetch the next page
+                        resp = httpGet(resp.pagination.nextPageUrl, GetTransactionsResponse.class);
+                        transactions = resp.documents.iterator();
+                        return transactions.hasNext();
+                    } else {
+                        // No more pages
+                        return false;
+                    }
+                }
+            }
+
+            @Override
+            public Document next() {
+                return transactions.next();
             }
         };
     }
