@@ -22,7 +22,7 @@ public final class UpdateInventoryRequest {
         this.setUnlimitedOperations = setUnlimitedOperations;
     }
 
-    public static class Builder {
+    public static final class Builder {
         private List<QuantityOperation> incrementOperations = new ArrayList<>();
         private List<QuantityOperation> decrementOperations = new ArrayList<>();
         private List<QuantityOperation> setFiniteOperations = new ArrayList<>();
