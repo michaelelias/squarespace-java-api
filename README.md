@@ -32,12 +32,12 @@ squarespace.fulfillOrder(request);
 ```
 
 ## Inventory
-## Get all inventory items
+### Get all inventory items
 ```
 squarespace.inventory();
 ```
 
-## Update inventory
+### Update inventory
 ```
 UpdateInventoryRequest req = new UpdateInventoryRequest.Builder()
     .increment("variant-1", 10)     // increase variant-1 by 10 units
