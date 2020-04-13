@@ -1,6 +1,6 @@
 # Squarespace Java API
 
-A very simple wrapper around the Squarespace REST API
+A java client for the Squarespace REST API
 
 # Usage
 
