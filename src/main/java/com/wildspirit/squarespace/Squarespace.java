@@ -6,20 +6,25 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wildspirit.squarespace.inventory.GetInventoryResponse;
 import com.wildspirit.squarespace.inventory.InventoryItem;
 import com.wildspirit.squarespace.inventory.UpdateInventoryRequest;
+import com.wildspirit.squarespace.orders.GetOrdersRequest;
 import com.wildspirit.squarespace.orders.GetOrdersResponse;
 import com.wildspirit.squarespace.orders.Order;
+import io.mikael.urlbuilder.UrlBuilder;
 import okhttp3.*;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.StringJoiner;
 
 public final class Squarespace {
     private final OkHttpClient client = new OkHttpClient();
     private final String apiKey;
     private final ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    private static final SimpleDateFormat ISO8601 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 
     public Squarespace(String apiKey) {
         this.apiKey = apiKey;
@@ -60,9 +65,21 @@ public final class Squarespace {
         httpPost("https://api.squarespace.com/1.0/commerce/inventory/adjustments", req, params, Void.class);
     }
 
-    public Iterable<Order> orders() {
+    public Iterable<Order> orders(GetOrdersRequest req) {
+        UrlBuilder builder = UrlBuilder.fromString("https://api.squarespace.com/1.0/commerce/orders");
+        if (req.fulfillmentStatus != null && !req.fulfillmentStatus.isEmpty()) {
+            StringJoiner joiner = new StringJoiner(",");
+            req.fulfillmentStatus.forEach(status -> joiner.add(status.name()));
+            builder.addParameter("fulfillmentStatus", joiner.toString());
+        }
+        if (req.modifiedAfter != null) {
+            builder.addParameter("modifiedAfter", ISO8601.format(req.modifiedAfter));
+        }
+        if (req.modifiedBefore != null) {
+            builder.addParameter("modifiedBefore", ISO8601.format(req.modifiedBefore));
+        }
         return () -> new Iterator<>() {
-            GetOrdersResponse resp = httpGet("https://api.squarespace.com/1.0/commerce/orders", GetOrdersResponse.class);
+            GetOrdersResponse resp = httpGet(builder.toString(), GetOrdersResponse.class);
             Iterator<Order> orders = resp.result.iterator();
 
             @Override

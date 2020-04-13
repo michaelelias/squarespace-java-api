@@ -8,7 +8,10 @@ A very simple wrapper around the Squarespace REST API
 Squarespace squarespace = new Squarespace(/** your key */);
 
 // Get orders
-squarespace.orders();
+GetOrdersRequest request = new GetOrdersRequest.Builder()
+    .withStatus(FulfillmentStatus.PENDING)
+    .build();
+squarespace.orders(request);
 
 // Get inventory
 squarespace.inventory();
