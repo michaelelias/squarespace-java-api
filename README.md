@@ -13,3 +13,7 @@ squarespace.orders();
 // Get inventory
 squarespace.inventory()
 ```
+
+# License
+
+MIT License
