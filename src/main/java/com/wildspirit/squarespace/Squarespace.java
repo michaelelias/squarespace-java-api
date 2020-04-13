@@ -70,6 +70,10 @@ public final class Squarespace {
         httpPost(String.format("https://api.squarespace.com/1.0/commerce/orders/%s/fulfillments", req.orderId), req, new HashMap<>(), Void.class);
     }
 
+    public Order order(String orderId) {
+        return httpGet(String.format("https://api.squarespace.com/1.0/commerce/orders/%s", orderId), Order.class);
+    }
+
     public Iterable<Order> orders(GetOrdersRequest req) {
         UrlBuilder builder = UrlBuilder.fromString("https://api.squarespace.com/1.0/commerce/orders");
         if (req.fulfillmentStatus != null && !req.fulfillmentStatus.isEmpty()) {

@@ -7,7 +7,10 @@ A very simple wrapper around the Squarespace REST API
 ```
 Squarespace squarespace = new Squarespace(/** your key */);
 
-// Get orders
+// Get a single order
+squarespace.order("123")
+
+// Get all orders
 GetOrdersRequest request = new GetOrdersRequest.Builder()
     .withStatus(FulfillmentStatus.PENDING)
     .build();
@@ -19,7 +22,7 @@ FulfillOrderRequest request = new FulfillOrderRequest.Builder()
     .build();
 squarespace.fulfillOrder(request);
 
-// Get inventory
+// Get all inventory items
 squarespace.inventory();
 ```
 
