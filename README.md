@@ -85,7 +85,7 @@ Use maven – one of life's necessary evils – to fetch the latest version of t
 <dependency>
     <groupId>com.wildspirit.squarespace</groupId>
     <artifactId>squarespace-java-api</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
 </dependency>
 ```
 
