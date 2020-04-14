@@ -31,6 +31,8 @@ squarespace.orders(request);
 ```
 FulfillOrderRequest request = new FulfillOrderRequest.Builder()
     .withOrderId("123")
+    .withShipment(shipmentInfo)
+    .shouldSendNotification(false) // true by default
     .build();
 squarespace.fulfillOrder(request);
 ```
