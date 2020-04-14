@@ -1,6 +1,7 @@
 package com.wildspirit.squarespace.orders;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -20,8 +21,8 @@ public final class GetOrdersRequest {
         private Date modifiedAfter;
         private Date modifiedBefore;
 
-        public Builder withStatus(FulfillmentStatus status) {
-            fulfillmentStatus.add(status);
+        public Builder status(FulfillmentStatus... status) {
+            fulfillmentStatus.addAll(Arrays.asList(status));
             return this;
         }
 

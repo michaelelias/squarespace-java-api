@@ -20,7 +20,9 @@ squarespace.order("123")
 ### Get all orders
 ```
 GetOrdersRequest request = new GetOrdersRequest.Builder()
-    .withStatus(FulfillmentStatus.PENDING)
+    .status(FulfillmentStatus.PENDING, FulfillmentStatus.CANCLED)
+    .before(earlierDate)
+    .after(laterDate)
     .build();
 squarespace.orders(request);
 ```
