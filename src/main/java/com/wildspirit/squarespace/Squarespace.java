@@ -161,7 +161,15 @@ public final class Squarespace {
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-            return mapper.readValue(response.body().bytes(), responseClazz);
+
+            switch (response.code()) {
+                case 403:
+                    throw new RuntimeException("Forbidden");
+                case 200:
+                    return mapper.readValue(response.body().bytes(), responseClazz);
+                default:
+                    throw new RuntimeException("Code " + response.code());
+            }
         } catch (IOException e) {
             throw new SquarespaceException("Could not map " + responseClazz.getName(), e);
         }

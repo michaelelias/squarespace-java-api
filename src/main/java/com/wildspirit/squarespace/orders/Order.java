@@ -27,7 +27,6 @@ public class Order {
     public final Amount taxTotal;
     public final Amount refundedTotal;
     public final Amount grandTotal;
-    public final Pagination pagination;
 
     public Order(
             @JsonProperty("id") String id,
@@ -49,8 +48,7 @@ public class Order {
             @JsonProperty("discountTotal") Amount discountTotal,
             @JsonProperty("taxTotal") Amount taxTotal,
             @JsonProperty("refundedTotal") Amount refundedTotal,
-            @JsonProperty("grandTotal") Amount grandTotal,
-            @JsonProperty("pagination") Pagination pagination
+            @JsonProperty("grandTotal") Amount grandTotal
     ) {
         this.id = id;
         this.orderNumber = orderNumber;
@@ -72,7 +70,6 @@ public class Order {
         this.taxTotal = taxTotal;
         this.refundedTotal = refundedTotal;
         this.grandTotal = grandTotal;
-        this.pagination = pagination;
     }
 
 }
