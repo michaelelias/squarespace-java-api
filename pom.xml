@@ -4,7 +4,7 @@
 
     <groupId>com.wildspirit.squarespace</groupId>
     <artifactId>squarespace-java-api</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.2</version>
     <description>A java client for the Squarespace Commerce API</description>
     <packaging>jar</packaging>
     <build>
@@ -23,7 +23,7 @@
     <scm>
         <connection>scm:git:git@github.com:i386/squarespace-java-api.git</connection>
         <developerConnection>scm:git:git@github.com:i386/squarespace-java-api.git</developerConnection>
-        <tag>master</tag>
+        <tag>squarespace-java-api-0.2</tag>
     </scm>
 
     <dependencies>
